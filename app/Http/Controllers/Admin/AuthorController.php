@@ -53,7 +53,6 @@ class AuthorController extends Controller
     public function edit($id)
     {
         $author = Author::find($id);
-        dd($author->books());
         foreach ($author->books() as $book){
             dump($book);
         }
