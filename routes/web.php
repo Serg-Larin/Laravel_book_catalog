@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/main', [MainController::class,'main'])->name('main');
 Route::get('/', [MainController::class,'index'])->name('main.catalog');
 Route::get('/book/{id}', [MainController::class,'oneBook'])->name('one.book');
+Route::post('order/new', [OrderController::class, 'newOrder'])->name('order.new');
+Route::post('comment/new', [CommentController::class, 'createNew'])->name('comment.new');
 
 
 Route::group(['middleware' => 'auth.basic', 'prefix' => 'admin'], function () {
@@ -30,7 +32,6 @@ Route::group(['middleware' => 'auth.basic', 'prefix' => 'admin'], function () {
         Route::resource('author', AuthorController::class);
 
         Route::prefix('order')->group(function () {
-            Route::post('new', [OrderController::class, 'newOrder'])->name('order.new');
             Route::get('', [OrderController::class, 'index'])->name('order.index');
             Route::get('{id}', [OrderController::class, 'oneOrder'])->name('order.one');
             Route::patch('{id}', [OrderController::class, 'orderStatusUpdate'])->name('order.update');
@@ -38,7 +39,6 @@ Route::group(['middleware' => 'auth.basic', 'prefix' => 'admin'], function () {
 
         Route::prefix('comment')->group(function () {
             Route::get('', [CommentController::class, 'index'])->name('comment.index');
-            Route::post('', [CommentController::class, 'createNew'])->name('comment.new');
             Route::delete('{id}', [CommentController::class, 'delete'])->name('comment.delete');
             Route::patch('{id}', [CommentController::class, 'approve'])->name('comment.approve');
 
